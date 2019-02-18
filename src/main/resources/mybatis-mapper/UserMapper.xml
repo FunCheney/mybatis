@@ -6,6 +6,6 @@
 <!-- 命名空间必须是Mapper的全路径 -->
 <mapper namespace = "cn.fchen.test.dao.UserMapper">
     <select id="getUser" parameterType="int" resultType="cn.fchen.test.pojo.User">
-        select * from user where id = #{id}
+        select * from 'user' where id = #{id}
     </select>
 </mapper>
