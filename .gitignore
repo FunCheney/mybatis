@@ -15,3 +15,5 @@
 derby.log
 /bin/
 .mvn/wrapper/maven-wrapper.jar
+build
+out
