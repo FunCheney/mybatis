@@ -9,5 +9,5 @@ import cn.fchen.test.pojo.User;
  * @Author by Fchen
  */
 public interface UserMapper {
-    User getUser(Integer id);
+    User getUser(int id);
 }

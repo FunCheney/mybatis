@@ -42,4 +42,11 @@ public class myTest {
             session.close();
         }
     }
+    @Test
+    public void testLombok(){
+        User user = new User();
+        user.setName("熊王");
+        user.setId(1);
+        System.out.println(user.toString());
+    }
 }
