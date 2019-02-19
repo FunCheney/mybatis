@@ -1,6 +1,4 @@
-package cn.fchen.test.dao;
-
-import cn.fchen.test.pojo.User;
+package cn.fchen;
 
 /**
  * @Classname UserMapper
@@ -9,5 +7,5 @@ import cn.fchen.test.pojo.User;
  * @Author by Fchen
  */
 public interface UserMapper {
-    User getUser(int id);
+    User getUser(Integer id);
 }
