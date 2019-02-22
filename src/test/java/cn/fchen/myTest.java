@@ -1,6 +1,5 @@
 package cn.fchen;
 
-import org.apache.ibatis.domain.blog.mappers.BlogMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -25,7 +24,7 @@ public class myTest {
             SqlSession session = sqlSessionFactory.openSession();
             UserMapper mapper = session.getMapper(UserMapper.class);
             User user = mapper.getUser(1);
-            System.out.println(user);
+            System.out.println(user.toString());
             session.close();
         }catch (Exception e){
             e.printStackTrace();
