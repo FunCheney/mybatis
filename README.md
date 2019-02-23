@@ -29,7 +29,7 @@
         3.创建statement类对象
         4.执行sql语句获取结果集
         5.释放资源
-    mybatis 操作数据库的步骤：
+    mybatis 操作数据库的步骤(myTest.java)：
       1.加载核心配置文件（mybatis-config-local.xml）
       2.获取sqlSessionFactory对象  
       3.获取SqlSession对象
