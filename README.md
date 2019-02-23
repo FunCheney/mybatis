@@ -41,6 +41,6 @@
     2. SqlSessionFactory：依靠工厂来生成SqlSession(会话)
     3. SqlSession：是一个既可以发送sql去执行并返回结果，也可以获取Mapper的接口
     4. SQL Mapper：由Java接口或XMl文件构成，需要给出对应的SQL和映射规则。他负责发送SQL去执行并返回结果
-  ![image]https://github.com/FunCheney/mybatis/image/timg.jpg
+  ![image](https://github.com/FunCheney/mybatis/blob/master/images/timg%20(1).jpg)
                                       
                                         
