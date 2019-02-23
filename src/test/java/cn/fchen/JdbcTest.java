@@ -22,26 +22,25 @@ public class JdbcTest {
         String password = "root";
         //遍历查询结果集
         try {
-            //加载驱动程序
+            //1.加载驱动程序
             Class.forName(driver);
-            //1.getConnection()方法，连接MySQL数据库！！
+            //2.getConnection()方法，连接MySQL数据库！！
             con = DriverManager.getConnection(url,user,password);
             if(!con.isClosed())
                 System.out.println("Succeeded connecting to the Database!");
-            //2.创建statement类对象，用来执行SQL语句！！
+            //3.创建statement类对象，用来执行SQL语句！！
             Statement statement = con.createStatement();
             //要执行的SQL语句
             String sql = "select * from user_test where id = 1";
-            //3.ResultSet类，用来存放获取的结果集！！
+            //4.执行sql语句获取结果集
             ResultSet rs = statement.executeQuery(sql);
-
-
             String name = null;
             while(rs.next()){
-                //获取stuname这列数据
-                name = rs.getString("user_name");
+                //获取name这列数据
+                name = rs.getString("name");
                 System.out.println("name:"+name);
             }
+            //5.释放资源
             rs.close();
             con.close();
         } catch(ClassNotFoundException e) {
@@ -53,8 +52,6 @@ public class JdbcTest {
             e.printStackTrace();
         }catch (Exception e) {
             e.printStackTrace();
-        }finally{
-            System.out.println("数据库数据成功获取！！");
         }
     }
 }
