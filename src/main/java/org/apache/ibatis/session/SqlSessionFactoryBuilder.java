@@ -43,7 +43,13 @@ public class SqlSessionFactoryBuilder {
   public SqlSessionFactory build(Reader reader, Properties properties) {
     return build(reader, null, properties);
   }
-
+  /**
+   * 通过输入字符流读取Mybatis配置
+   * @param reader
+   * @param environment
+   * @param properties
+   * @return
+   */
   public SqlSessionFactory build(Reader reader, String environment, Properties properties) {
     try {
       XMLConfigBuilder parser = new XMLConfigBuilder(reader, environment, properties);
@@ -72,8 +78,16 @@ public class SqlSessionFactoryBuilder {
     return build(inputStream, null, properties);
   }
 
+  /**
+   * 通过输入字节流读取Mybatis配置
+   * @param inputStream
+   * @param environment
+   * @param properties
+   * @return
+   */
   public SqlSessionFactory build(InputStream inputStream, String environment, Properties properties) {
     try {
+      //解析myBatis配置文件获取parser对象
       XMLConfigBuilder parser = new XMLConfigBuilder(inputStream, environment, properties);
       return build(parser.parse());
     } catch (Exception e) {
@@ -88,6 +102,11 @@ public class SqlSessionFactoryBuilder {
     }
   }
 
+  /**
+   * 通过Configuration对象获取 SqlSessionFactory
+   * @param config
+   * @return
+   */
   public SqlSessionFactory build(Configuration config) {
     return new DefaultSqlSessionFactory(config);
   }
