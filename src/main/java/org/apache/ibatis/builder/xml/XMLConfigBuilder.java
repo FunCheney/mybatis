@@ -81,6 +81,7 @@ public class XMLConfigBuilder extends BaseBuilder {
     this(new XPathParser(inputStream, true, props, new XMLMapperEntityResolver()), environment, props);
   }
 
+  //通过构造器给变量赋值
   private XMLConfigBuilder(XPathParser parser, String environment, Properties props) {
     super(new Configuration());
     ErrorContext.instance().resource("SQL Mapper Configuration");
@@ -91,31 +92,46 @@ public class XMLConfigBuilder extends BaseBuilder {
   }
 
   public Configuration parse() {
+    //parsed 初始值为false
     if (parsed) {
       throw new BuilderException("Each XMLConfigBuilder can only be used once.");
     }
     parsed = true;
+    //mybatis的配置文件的根节点是configuration，从根节点开始解析配置文件
     parseConfiguration(parser.evalNode("/configuration"));
     return configuration;
   }
-
+  ////从xml配置文件中加载到Configuration对象中
   private void parseConfiguration(XNode root) {
     try {
       //issue #117 read properties first
+      //解析子节点properties
       propertiesElement(root.evalNode("properties"));
+      ////解析settings定义一些全局性的配置
       Properties settings = settingsAsProperties(root.evalNode("settings"));
+
       loadCustomVfs(settings);
+
       loadCustomLogImpl(settings);
+      //解析子节点plugins 插件
       typeAliasesElement(root.evalNode("typeAliases"));
+      //解析子节点plugins 插件
       pluginElement(root.evalNode("plugins"));
+      //解析子节点objectFactory mybatis为结果创建对象时都会用到objectFactory
       objectFactoryElement(root.evalNode("objectFactory"));
+      //解析子节点objectWrapperFactory
       objectWrapperFactoryElement(root.evalNode("objectWrapperFactory"));
       reflectorFactoryElement(root.evalNode("reflectorFactory"));
       settingsElement(settings);
       // read it after objectFactory and objectWrapperFactory issue #631
+      //解析environments 可以配置多个运行环境，但是每个SqlSessionFactory 实例只能选择一个运行环境
       environmentsElement(root.evalNode("environments"));
+      //解析databaseIdProvider MyBatis能够执行不同的语句取决于你提供的数据库供应商。许多数据库供应商的支持是基于databaseId映射
       databaseIdProviderElement(root.evalNode("databaseIdProvider"));
+      //解析typeHandlers 当MyBatis设置参数到PreparedStatement 或者从ResultSet 结果集中取得值时，
+      // 就会使用TypeHandler     来处理数据库类型与java 类型之间转换
       typeHandlerElement(root.evalNode("typeHandlers"));
+      //解析mappers 主要的crud操作都是在mappers中定义的
       mapperElement(root.evalNode("mappers"));
     } catch (Exception e) {
       throw new BuilderException("Error parsing SQL Mapper Configuration. Cause: " + e, e);
