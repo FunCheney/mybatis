@@ -51,9 +51,11 @@ import org.apache.ibatis.type.JdbcType;
  * @author Kazuki Shimizu
  */
 public class XMLConfigBuilder extends BaseBuilder {
-
+  //解析标识，用来标识Configuration对象是否创建
   private boolean parsed;
+  //XPathParser 是用来解析xml文件
   private final XPathParser parser;
+  //环境参数
   private String environment;
   private final ReflectorFactory localReflectorFactory = new DefaultReflectorFactory();
 
@@ -66,6 +68,7 @@ public class XMLConfigBuilder extends BaseBuilder {
   }
 
   public XMLConfigBuilder(Reader reader, String environment, Properties props) {
+        // 获取 XPathParser 对象方式1
     this(new XPathParser(reader, true, props, new XMLMapperEntityResolver()), environment, props);
   }
 
@@ -78,16 +81,23 @@ public class XMLConfigBuilder extends BaseBuilder {
   }
 
   public XMLConfigBuilder(InputStream inputStream, String environment, Properties props) {
+          //获取 XPathParser 对象方式2
     this(new XPathParser(inputStream, true, props, new XMLMapperEntityResolver()), environment, props);
   }
 
   //通过构造器给变量赋值
   private XMLConfigBuilder(XPathParser parser, String environment, Properties props) {
+    //调用父类的构造方法。通过new Configuration()的方式创建Configuration对象传入构造器
+    //对父类中的字段赋值
     super(new Configuration());
     ErrorContext.instance().resource("SQL Mapper Configuration");
+    //对Configuration对象的变量赋值
     this.configuration.setVariables(props);
+    //解析标识赋值
     this.parsed = false;
+    //环境参数赋值
     this.environment = environment;
+    //解析xml的对象
     this.parser = parser;
   }
 
@@ -101,7 +111,7 @@ public class XMLConfigBuilder extends BaseBuilder {
     parseConfiguration(parser.evalNode("/configuration"));
     return configuration;
   }
-  ////从xml配置文件中加载到Configuration对象中
+  //从xml配置文件中加载到Configuration对象中
   private void parseConfiguration(XNode root) {
     try {
       //issue #117 read properties first
