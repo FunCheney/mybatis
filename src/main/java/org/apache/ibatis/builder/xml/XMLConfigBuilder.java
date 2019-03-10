@@ -123,7 +123,7 @@ public class XMLConfigBuilder extends BaseBuilder {
       loadCustomVfs(settings);
 
       loadCustomLogImpl(settings);
-      //解析子节点plugins 插件
+      //解析子节点typeAliases 插件
       typeAliasesElement(root.evalNode("typeAliases"));
       //解析子节点plugins 插件
       pluginElement(root.evalNode("plugins"));
