@@ -45,9 +45,13 @@ import org.xml.sax.SAXParseException;
  */
 public class XPathParser {
 
+  //Document:文档对象模型
   private final Document document;
+  //validation用于设置解析xml时是否对它进行校验
   private boolean validation;
+  //DocumentBuilder对象的属性
   private EntityResolver entityResolver;
+  //外部传入的变量值
   private Properties variables;
   private XPath xpath;
 
@@ -117,12 +121,16 @@ public class XPathParser {
   }
 
   public XPathParser(Reader reader, boolean validation, Properties variables, EntityResolver entityResolver) {
+    //调用commonConstructor构造器
     commonConstructor(validation, variables, entityResolver);
+    //构造document对象赋值给成员变量，注意这两个方法的调用顺序
     this.document = createDocument(new InputSource(reader));
   }
 
   public XPathParser(InputStream inputStream, boolean validation, Properties variables, EntityResolver entityResolver) {
+    //调用commonConstructor构造器
     commonConstructor(validation, variables, entityResolver);
+    //构造document对象赋值给成员变量
     this.document = createDocument(new InputSource(inputStream));
   }
 
@@ -230,15 +238,17 @@ public class XPathParser {
     // important: this must only be called AFTER common constructor
     try {
       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+      //设置解析xml的时候时候需要校验
       factory.setValidating(validation);
-
+      //设置DocumentBuilderFactor的其他属性的值
       factory.setNamespaceAware(false);
       factory.setIgnoringComments(true);
       factory.setIgnoringElementContentWhitespace(false);
       factory.setCoalescing(false);
       factory.setExpandEntityReferences(true);
-
+      //获取DocumentBuilder对象
       DocumentBuilder builder = factory.newDocumentBuilder();
+      //设置builder的entityResolver属性
       builder.setEntityResolver(entityResolver);
       builder.setErrorHandler(new ErrorHandler() {
         @Override
@@ -265,6 +275,7 @@ public class XPathParser {
     this.validation = validation;
     this.entityResolver = entityResolver;
     this.variables = variables;
+    //通过调用静态的newInstance()方法获取 XPathFactory对象
     XPathFactory factory = XPathFactory.newInstance();
     this.xpath = factory.newXPath();
   }
