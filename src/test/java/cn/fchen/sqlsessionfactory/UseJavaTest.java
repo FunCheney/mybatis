@@ -14,9 +14,9 @@ import org.junit.Test;
 import java.io.IOException;
 
 /**
- * @Classname LoadXmlTest
+ * @Classname UseJavaTest
  * @Description 通过非xml方式获取  SqlSessionFactory
- * @Date 2019/3/14 17:03
+ * @Date 2019/3/14 19:03
  * @Author by Fchen
  */
 public class UseJavaTest {

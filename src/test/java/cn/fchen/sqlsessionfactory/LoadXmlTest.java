@@ -11,7 +11,7 @@ import java.io.InputStream;
 /**
  * @Classname LoadXmlTest
  * @Description 通过xml获取  SqlSessionFactory
- * @Date 2019/3/14 17:03
+ * @Date 2019/3/14 19:03
  * @Author by Fchen
  */
 
