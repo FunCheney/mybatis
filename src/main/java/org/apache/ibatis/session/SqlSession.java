@@ -37,6 +37,7 @@ public interface SqlSession extends Closeable {
    * @param statement
    * @return Mapped object
    */
+  //通过声明获取一行数据
   <T> T selectOne(String statement);
 
   /**
@@ -46,6 +47,7 @@ public interface SqlSession extends Closeable {
    * @param parameter A parameter object to pass to the statement.
    * @return Mapped object
    */
+  //通过声明和参数获取一行数据
   <T> T selectOne(String statement, Object parameter);
 
   /**
@@ -54,6 +56,7 @@ public interface SqlSession extends Closeable {
    * @param statement Unique identifier matching the statement to use.
    * @return List of mapped object
    */
+  //获取数据列表
   <E> List<E> selectList(String statement);
 
   /**
@@ -63,6 +66,7 @@ public interface SqlSession extends Closeable {
    * @param parameter A parameter object to pass to the statement.
    * @return List of mapped object
    */
+  //根据条件获取数据列表
   <E> List<E> selectList(String statement, Object parameter);
 
   /**
@@ -74,6 +78,7 @@ public interface SqlSession extends Closeable {
    * @param rowBounds  Bounds to limit object retrieval
    * @return List of mapped object
    */
+  //根据条件获取一定行数的数据列表
   <E> List<E> selectList(String statement, Object parameter, RowBounds rowBounds);
 
   /**
@@ -87,6 +92,7 @@ public interface SqlSession extends Closeable {
    * @param mapKey The property to use as key for each value in the list.
    * @return Map containing key pair data.
    */
+  //将结果转换成map
   <K, V> Map<K, V> selectMap(String statement, String mapKey);
 
   /**
@@ -100,6 +106,7 @@ public interface SqlSession extends Closeable {
    * @param mapKey The property to use as key for each value in the list.
    * @return Map containing key pair data.
    */
+  //将条件结果转换成map
   <K, V> Map<K, V> selectMap(String statement, Object parameter, String mapKey);
 
   /**
@@ -114,6 +121,7 @@ public interface SqlSession extends Closeable {
    * @param rowBounds  Bounds to limit object retrieval
    * @return Map containing key pair data.
    */
+  //有条件结果及一定行数的数据转换成map
   <K, V> Map<K, V> selectMap(String statement, Object parameter, String mapKey, RowBounds rowBounds);
 
   /**
@@ -221,6 +229,7 @@ public interface SqlSession extends Closeable {
    * Note that database connection will not be committed if no updates/deletes/inserts were called.
    * To force the commit call {@link SqlSession#commit(boolean)}
    */
+  //事务提交
   void commit();
 
   /**
@@ -234,6 +243,7 @@ public interface SqlSession extends Closeable {
    * Note that database connection will not be rolled back if no updates/deletes/inserts were called.
    * To force the rollback call {@link SqlSession#rollback(boolean)}
    */
+  //事务回滚
   void rollback();
 
   /**
@@ -259,6 +269,7 @@ public interface SqlSession extends Closeable {
   /**
    * Clears local session cache.
    */
+  //清除session缓存
   void clearCache();
 
   /**
