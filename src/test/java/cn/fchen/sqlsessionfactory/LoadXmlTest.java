@@ -1,6 +1,7 @@
 package cn.fchen.sqlsessionfactory;
 
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
@@ -22,6 +23,7 @@ public class LoadXmlTest {
         String resource = "mybatis-config-local.xml";
         InputStream resourceAsStream = Resources.getResourceAsStream(resource);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(resourceAsStream);
-        System.out.println(sqlSessionFactory);
+        SqlSession session = sqlSessionFactory.openSession();
+
     }
 }
