@@ -44,6 +44,14 @@ public class myTest {
         User user = mapper.getUser(1);
         System.out.println(user);
     }
+
+    @Test
+    public void queryUserBySession() throws IOException{
+        //3.获取SqlSession对象
+        session = sqlSessionFactory.openSession();
+        User user = (User) session.selectOne("cn.fchen.UserMapper.getUser", 1);
+        System.out.println(user);
+    }
     @After
     public void close(){
         if(session != null){
