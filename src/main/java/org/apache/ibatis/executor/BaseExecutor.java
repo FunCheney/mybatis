@@ -149,10 +149,12 @@ public abstract class BaseExecutor implements Executor {
     List<E> list;
     try {
       queryStack++;
+      //从一级缓存中获取数据
       list = resultHandler == null ? (List<E>) localCache.getObject(key) : null;
       if (list != null) {
         handleLocallyCachedOutputParameters(ms, key, parameter, boundSql);
       } else {
+        //没有一级缓存则查找数据库
         list = queryFromDatabase(ms, parameter, rowBounds, resultHandler, key, boundSql);
       }
     } finally {
@@ -321,6 +323,7 @@ public abstract class BaseExecutor implements Executor {
     List<E> list;
     localCache.putObject(key, EXECUTION_PLACEHOLDER);
     try {
+      //执行查询
       list = doQuery(ms, parameter, rowBounds, resultHandler, boundSql);
     } finally {
       localCache.removeObject(key);

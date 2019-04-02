@@ -146,6 +146,8 @@ public class DefaultSqlSession implements SqlSession {
       //configuration对象通过Sql语句 的StatementId获取MapperStatement对象
       MappedStatement ms = configuration.getMappedStatement(statement);
       //通过executor（执行器）来执行sql语句
+      //rowBounds用来逻辑分页
+      //wrapCollection(parameter)用来装配集合或者数组参数
       return executor.query(ms, wrapCollection(parameter), rowBounds, Executor.NO_RESULT_HANDLER);
     } catch (Exception e) {
       throw ExceptionFactory.wrapException("Error querying database.  Cause: " + e, e);
@@ -319,16 +321,26 @@ public class DefaultSqlSession implements SqlSession {
     return (!autoCommit && dirty) || force;
   }
 
+  /**
+   * 装配集合或者数组参数
+   * @param object
+   * @return
+   */
   private Object wrapCollection(final Object object) {
+    //判断是否是Collection类型参数
     if (object instanceof Collection) {
       StrictMap<Object> map = new StrictMap<>();
+      //key为collection，value为集合类型参数
       map.put("collection", object);
+      //判断是否为List参数类型
       if (object instanceof List) {
+        //key为list，value为集合参数
         map.put("list", object);
       }
       return map;
     } else if (object != null && object.getClass().isArray()) {
       StrictMap<Object> map = new StrictMap<>();
+      //key为array，value为数组
       map.put("array", object);
       return map;
     }
