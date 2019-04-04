@@ -55,30 +55,42 @@ public class MapperMethod {
   }
 
   public Object execute(SqlSession sqlSession, Object[] args) {
+    //返回结果集
     Object result;
+    //判断命令模式类型
     switch (command.getType()) {
       case INSERT: {
+        //插入操作
+        //处理参数
         Object param = method.convertArgsToSqlCommandParam(args);
+        //调用sqlSession的insert方法
         result = rowCountResult(sqlSession.insert(command.getName(), param));
         break;
       }
       case UPDATE: {
+        //更新操作
         Object param = method.convertArgsToSqlCommandParam(args);
+        //调用sqlSession的update方法
         result = rowCountResult(sqlSession.update(command.getName(), param));
         break;
       }
       case DELETE: {
+        //删除操作
         Object param = method.convertArgsToSqlCommandParam(args);
+        //调用sqlSession的delete方法
         result = rowCountResult(sqlSession.delete(command.getName(), param));
         break;
       }
       case SELECT:
+        //查找操作
         if (method.returnsVoid() && method.hasResultHandler()) {
           executeWithResultHandler(sqlSession, args);
           result = null;
         } else if (method.returnsMany()) {
+          //如果返回多行结果,executeForMany这个方法调用 <E> List<E> selectList(String statement, Object parameter);
           result = executeForMany(sqlSession, args);
         } else if (method.returnsMap()) {
+          //如果返回类型是MAP 则调用executeForMap方法
           result = executeForMap(sqlSession, args);
         } else if (method.returnsCursor()) {
           result = executeForCursor(sqlSession, args);

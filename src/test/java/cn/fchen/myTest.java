@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Classname myTest
@@ -50,6 +52,17 @@ public class myTest {
         //3.获取SqlSession对象
         session = sqlSessionFactory.openSession();
         User user = (User) session.selectOne("cn.fchen.UserMapper.getUser", 1);
+        System.out.println(user);
+    }
+
+    @Test
+    public void queryUserBySessionList() throws IOException{
+        //3.获取SqlSession对象
+        session = sqlSessionFactory.openSession();
+        List<Integer> ids = new ArrayList<>();
+        ids.add(1);
+        ids.add(2);
+        User user = (User) session.selectList("cn.fchen.UserMapper.getUserList", ids);
         System.out.println(user);
     }
     @After

@@ -1,5 +1,7 @@
 package cn.fchen;
 
+import java.util.List;
+
 /**
  * @Classname UserMapper
  * @Description TODO
@@ -8,4 +10,6 @@ package cn.fchen;
  */
 public interface UserMapper {
     User getUser(Integer id);
+
+    List<User> getUserList(List<Integer> ids);
 }
