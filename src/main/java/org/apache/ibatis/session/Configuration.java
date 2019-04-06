@@ -573,9 +573,11 @@ public class Configuration {
   }
 
   public Executor newExecutor(Transaction transaction, ExecutorType executorType) {
+    //为null默认，不为null就按照根据配置文件里面配置
     executorType = executorType == null ? defaultExecutorType : executorType;
     executorType = executorType == null ? ExecutorType.SIMPLE : executorType;
     Executor executor;
+    //根据类型创建对应的执行器
     if (ExecutorType.BATCH == executorType) {
       executor = new BatchExecutor(this, transaction);
     } else if (ExecutorType.REUSE == executorType) {
@@ -583,9 +585,11 @@ public class Configuration {
     } else {
       executor = new SimpleExecutor(this, transaction);
     }
+    //是否在一级缓存中查找，默认为true，说明Mybatis默认打开一级缓存
     if (cacheEnabled) {
       executor = new CachingExecutor(executor);
     }
+    //MyBatis插件，在使用真实的执行器之前，执行配置插件的代码
     executor = (Executor) interceptorChain.pluginAll(executor);
     return executor;
   }

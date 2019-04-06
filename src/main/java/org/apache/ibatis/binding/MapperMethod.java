@@ -46,6 +46,7 @@ import org.apache.ibatis.session.SqlSession;
  */
 public class MapperMethod {
 
+  //用来记录命令
   private final SqlCommand command;
   private final MethodSignature method;
 
@@ -229,13 +230,17 @@ public class MapperMethod {
   }
 
   public static class SqlCommand {
-
+    //命令名称
     private final String name;
+    //命令类型
     private final SqlCommandType type;
 
     public SqlCommand(Configuration configuration, Class<?> mapperInterface, Method method) {
+      //获取方法名称
       final String methodName = method.getName();
+      //获取犯法所在的类
       final Class<?> declaringClass = method.getDeclaringClass();
+      //获取MapperStatement对象
       MappedStatement ms = resolveMappedStatement(mapperInterface, methodName, declaringClass,
           configuration);
       if (ms == null) {
@@ -247,7 +252,9 @@ public class MapperMethod {
               + mapperInterface.getName() + "." + methodName);
         }
       } else {
+        //将statementId赋值给命令名称
         name = ms.getId();
+        //命令类型
         type = ms.getSqlCommandType();
         if (type == SqlCommandType.UNKNOWN) {
           throw new BindingException("Unknown execution method for: " + name);
@@ -265,8 +272,11 @@ public class MapperMethod {
 
     private MappedStatement resolveMappedStatement(Class<?> mapperInterface, String methodName,
         Class<?> declaringClass, Configuration configuration) {
+      //通过Mapper接口的名称和方法名 得到statementId
       String statementId = mapperInterface.getName() + "." + methodName;
+      //判断Configuration对象中是否有statementId
       if (configuration.hasStatement(statementId)) {
+        //通过statementId 获取MappedStatement
         return configuration.getMappedStatement(statementId);
       } else if (mapperInterface.equals(declaringClass)) {
         return null;
