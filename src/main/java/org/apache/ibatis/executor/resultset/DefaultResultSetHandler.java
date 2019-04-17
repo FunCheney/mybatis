@@ -180,17 +180,25 @@ public class DefaultResultSetHandler implements ResultSetHandler {
   @Override
   public List<Object> handleResultSets(Statement stmt) throws SQLException {
     ErrorContext.instance().activity("handling results").object(mappedStatement.getId());
-
+    //存储多个结果
+    //<select>标签有一个resultMap属性，可以指定多个值，用逗号(,)分割
     final List<Object> multipleResults = new ArrayList<>();
 
     int resultSetCount = 0;
+    //获取第一个结果集，将传统的JDBC的ResultSet包装成一个包含结果列元信息的ResultSetWrapper对象
     ResultSetWrapper rsw = getFirstResultSet(stmt);
 
+    //获取所有要映射的ResultMap
     List<ResultMap> resultMaps = mappedStatement.getResultMaps();
+    //要映射的ResultMap的数量
     int resultMapCount = resultMaps.size();
     validateResultMapsCount(rsw, resultMapCount);
+    //循环处理每个ResultMap，从第一个开始
     while (rsw != null && resultMapCount > resultSetCount) {
+      //得到结果集映射信息
       ResultMap resultMap = resultMaps.get(resultSetCount);
+      //处理结果集
+      //从rsw结果集参数中获取查询结果，再根据resultMap映射信息，将查询结果映射到multipleResults中
       handleResultSet(rsw, resultMap, multipleResults, null);
       rsw = getNextResultSet(stmt);
       cleanUpAfterHandlingResultSet();
@@ -293,6 +301,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
 
   private void handleResultSet(ResultSetWrapper rsw, ResultMap resultMap, List<Object> multipleResults, ResultMapping parentMapping) throws SQLException {
     try {
+      //处理嵌套结果映射
       if (parentMapping != null) {
         handleRowValues(rsw, resultMap, null, RowBounds.DEFAULT, parentMapping);
       } else {
