@@ -53,7 +53,9 @@ public class ResultSetWrapper {
     super();
     this.typeHandlerRegistry = configuration.getTypeHandlerRegistry();
     this.resultSet = rs;
+    // 获取ResultSet 中列的名称和类型的信息
     final ResultSetMetaData metaData = rs.getMetaData();
+    // 从元数据中获得列数
     final int columnCount = metaData.getColumnCount();
     for (int i = 1; i <= columnCount; i++) {
       columnNames.add(configuration.isUseColumnLabel() ? metaData.getColumnLabel(i) : metaData.getColumnName(i));
