@@ -206,13 +206,23 @@ public class XMLConfigBuilder extends BaseBuilder {
     }
   }
 
+  /**
+   * 插件初始化
+   * @param parent
+   * @throws Exception
+   */
   private void pluginElement(XNode parent) throws Exception {
     if (parent != null) {
       for (XNode child : parent.getChildren()) {
+        //<plugin>标签中的interceptor属性，这是自定义的拦截器的全路径
         String interceptor = child.getStringAttribute("interceptor");
+        //<plugin>标签下的所有<property>标签，解析name和value属性成为一个Properties
         Properties properties = child.getChildrenAsProperties();
+        //使用反射生成拦截器实例
         Interceptor interceptorInstance = (Interceptor) resolveClass(interceptor).newInstance();
+        //调用setProperties方法，，将Properties设置到拦截器中
         interceptorInstance.setProperties(properties);
+        //保存插件到配置configuration对象中
         configuration.addInterceptor(interceptorInstance);
       }
     }
