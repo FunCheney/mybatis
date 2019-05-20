@@ -23,9 +23,16 @@ import java.util.List;
  * @author Clinton Begin
  */
 public class InterceptorChain {
-
+  /**
+   * 存储拦截器
+   */
   private final List<Interceptor> interceptors = new ArrayList<>();
 
+  /**
+   * 为目标对象添加所有拦截器
+   * @param target
+   * @return
+   */
   public Object pluginAll(Object target) {
     for (Interceptor interceptor : interceptors) {
       target = interceptor.plugin(target);
@@ -33,6 +40,10 @@ public class InterceptorChain {
     return target;
   }
 
+  /**
+   * 将拦截器添加到interceptors中
+   * @param interceptor
+   */
   public void addInterceptor(Interceptor interceptor) {
     interceptors.add(interceptor);
   }

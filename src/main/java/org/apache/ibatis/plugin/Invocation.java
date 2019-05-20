@@ -27,6 +27,12 @@ public class Invocation {
   private final Method method;
   private final Object[] args;
 
+  /**
+   * 构造函数
+   * @param target 被代理对象
+   * @param method 方法
+   * @param args  参数
+   */
   public Invocation(Object target, Method method, Object[] args) {
     this.target = target;
     this.method = method;
