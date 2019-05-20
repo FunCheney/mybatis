@@ -44,6 +44,7 @@
    <div align="center">
     <img src="https://github.com/FunCheney/mybatis/blob/master/images/mybatis_01.png">
    </ div>
+   
 #### 1.4  SqlSessionFactoryBuilder对象
    ##### 1.4.1 XMLConfigBuilder 对象
                                       
